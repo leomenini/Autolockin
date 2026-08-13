@@ -1,0 +1,19 @@
+[Unit]
+Description=Autolockin — task flowchart that gates folders and games
+Documentation=file:%h/devTools/Autolockin/README.md
+
+[Service]
+Type=simple
+# Adjust these two lines if you move the project or use a different venv.
+WorkingDirectory=%h/devTools/Autolockin
+ExecStart=%h/devTools/Autolockin/.venv/bin/autolockin serve --host 127.0.0.1 --port 8420
+
+# Stopping the service always unlocks everything. Losing the daemon must never
+# mean losing access to a folder.
+ExecStop=%h/devTools/Autolockin/.venv/bin/autolockin restore
+
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
